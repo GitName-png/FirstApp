@@ -4,6 +4,8 @@ package com.eltex;
 import java.util.Map;
 
 public class ValueType {
+    private ValueType() {}
+
     private static final Map<Integer, String> map = Map.of(
             1, "\u20BD",
             2, "Br",

@@ -9,7 +9,7 @@ public record Post(long id, long authorId, String author,
 
     public Post {
         if (content == null || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("Content be null or empty");
+            throw new IllegalArgumentException("Content cannot be null or empty");
         }
     }
 

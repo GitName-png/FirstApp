@@ -1,4 +1,8 @@
-package com.eltex;
+package com.eltex.service;
+
+import com.eltex.models.Post;
+import com.eltex.models.Coordinates;
+import com.eltex.models.Attachment;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +15,13 @@ public class WallService {
             .setAuthorAvatar(null)
             .setContent("Content")
             .setPublished(LocalDateTime.now())
+            .setCoords(null)
             .setLink(null)
             .setMentionedMe(false)
             .setLikedByMe(false)
+            .setAttachment(null)
             .setLikes(0)
+            .setOriginal(null)
             .build();
 
     public void like() {
@@ -66,6 +73,12 @@ public class WallService {
                 .build();
     }
 
+    public void setCoords(final Coordinates coords) {
+        post = post.builder()
+                .setCoords(coords)
+                .build();
+    }
+
     public void setLink(final String link) {
         post = post.builder()
                 .setLink(link)
@@ -84,9 +97,21 @@ public class WallService {
                 .build();
     }
 
+    public void setAttachment(final Attachment attachment) {
+        post = post.builder()
+                .setAttachment(attachment)
+                .build();
+    }
+
     public void setLikes(final int likes) {
         post = post.builder()
                 .setLikes(likes)
+                .build();
+    }
+
+    public void setOriginal(final Post original) {
+        post = post.builder()
+                .setOriginal(original)
                 .build();
     }
 

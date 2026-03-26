@@ -1,3 +1,6 @@
+package service
+
+import models.Note
 import java.time.Instant
 
 class NoteService() {

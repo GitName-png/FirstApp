@@ -1,3 +1,5 @@
+import service.NoteService
+
 fun main() {
     val service = NoteService()
     println(service.getNote())

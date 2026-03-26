@@ -1,7 +1,6 @@
-package models;
+package models
 
-import com.eltex.models.AttachmentType;
-import org.jetbrains.annotations.Nullable;
+import com.eltex.models.AttachmentType
 
-public record Attachment(@Nullable String url, @Nullable AttachmentType type) {
-}
+@JvmRecord
+data class Attachment(val url: String?, val type: AttachmentType?) 

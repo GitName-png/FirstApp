@@ -1,161 +1,156 @@
-package models;
+package models
 
-import com.eltex.models.Attachment;
-import com.eltex.models.Coordinates;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.eltex.models.Attachment
+import com.eltex.models.Coordinates
+import java.time.LocalDateTime
 
-import java.time.LocalDateTime;
-
-public record Post(long id, long authorId, @NotNull String author,
-                   @Nullable String authorJob, @Nullable String authorAvatar,
-                   @NotNull String content, @NotNull LocalDateTime published,
-                   @Nullable Coordinates coords, @Nullable String link,
-                   boolean mentionedMe, boolean likedByMe,
-                   @Nullable Attachment attachment, int likes,
-                   @Nullable Post original) {
-
-    public boolean isOriginal() {
-        return original == null;
+@JvmRecord
+data class Post(
+    val id: Long,
+    val authorId: Long,
+    val author: String,
+    val authorJob: String?,
+    val authorAvatar: String?,
+    val content: String,
+    val published: LocalDateTime,
+    val coords: Coordinates?,
+    val link: String?,
+    val mentionedMe: Boolean,
+    val likedByMe: Boolean,
+    val attachment: Attachment?,
+    val likes: Int,
+    val original: Post?
+) {
+    fun isOriginal(): Boolean {
+        return original == null
     }
 
-    public Post {
-        if (content == null || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be null or empty");
+    fun builder(): Builder {
+        return Builder()
+            .setId(id)
+            .setAuthorId(authorId)
+            .setAuthor(author)
+            .setAuthorJob(authorJob)
+            .setAuthorAvatar(authorAvatar)
+            .setContent(content)
+            .setPublished(published)
+            .setCoords(coords)
+            .setLink(link)
+            .setMentionedMe(mentionedMe)
+            .setLikedByMe(likedByMe)
+            .setAttachment(attachment)
+            .setLikes(likes)
+            .setOriginal(original)
+    }
+
+    class Builder {
+        private var id: Long = 0
+        private var authorId: Long = 0
+
+        private var author = ""
+
+        private var authorJob: String? = null
+
+        private var authorAvatar: String? = null
+
+        private var content = ""
+
+        private var published: LocalDateTime = LocalDateTime.now()
+
+        private var coords: Coordinates? = null
+
+        private var link: String? = null
+
+        private var mentionedMe = false
+        private var likedByMe = false
+
+        private var attachment: Attachment? = null
+
+        private var likes = 0
+
+        private var original: Post? = null
+
+        fun setId(id: Long): Builder {
+            this.id = id
+            return this
+        }
+
+        fun setAuthorId(authorId: Long): Builder {
+            this.authorId = authorId
+            return this
+        }
+
+        fun setAuthor(author: String): Builder {
+            this.author = author
+            return this
+        }
+
+        fun setAuthorJob(authorJob: String?): Builder {
+            this.authorJob = authorJob
+            return this
+        }
+
+        fun setAuthorAvatar(authorAvatar: String?): Builder {
+            this.authorAvatar = authorAvatar
+            return this
+        }
+
+        fun setContent(content: String): Builder {
+            require(!(content == null || content.trim { it <= ' ' }.isEmpty())) { "Content cannot be null or empty" }
+            this.content = content
+            return this
+        }
+
+        fun setPublished(published: LocalDateTime): Builder {
+            this.published = published
+            return this
+        }
+
+        fun setCoords(coords: Coordinates?): Builder {
+            this.coords = coords
+            return this
+        }
+
+        fun setLink(link: String?): Builder {
+            this.link = link
+            return this
+        }
+
+        fun setMentionedMe(mentionedMe: Boolean): Builder {
+            this.mentionedMe = mentionedMe
+            return this
+        }
+
+        fun setLikedByMe(likedByMe: Boolean): Builder {
+            this.likedByMe = likedByMe
+            return this
+        }
+
+        fun setAttachment(attachment: Attachment?): Builder {
+            this.attachment = attachment
+            return this
+        }
+
+        fun setLikes(likes: Int): Builder {
+            this.likes = likes
+            return this
+        }
+
+        fun setOriginal(original: Post?): Builder {
+            this.original = original
+            return this
+        }
+
+        fun build(): Post {
+            return Post(
+                id, authorId, author, authorJob, authorAvatar,
+                content, published, coords, link, mentionedMe, likedByMe,
+                attachment, likes, original
+            )
         }
     }
 
-    public Builder builder() {
-        return new Builder()
-                .setId(id)
-                .setAuthorId(authorId)
-                .setAuthor(author)
-                .setAuthorJob(authorJob)
-                .setAuthorAvatar(authorAvatar)
-                .setContent(content)
-                .setPublished(published)
-                .setCoords(coords)
-                .setLink(link)
-                .setMentionedMe(mentionedMe)
-                .setLikedByMe(likedByMe)
-                .setAttachment(attachment)
-                .setLikes(likes)
-                .setOriginal(original);
-    }
-
-    public static class Builder {
-        private long id = 0;
-        private long authorId = 0;
-
-        @NotNull
-        private String author = "";
-
-        @Nullable
-        private String authorJob;
-
-        @Nullable
-        private String authorAvatar;
-
-        @NotNull
-        private String content = "";
-
-        @NotNull
-        private LocalDateTime published = LocalDateTime.now();
-
-        @Nullable
-        private Coordinates coords;
-
-        @Nullable
-        private String link;
-
-        private boolean mentionedMe = false;
-        private boolean likedByMe = false;
-
-        @Nullable
-        private Attachment attachment;
-
-        private int likes = 0;
-
-        @Nullable
-        private Post original = null;
-
-        public Builder setId(final long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setAuthorId(final long authorId) {
-            this.authorId = authorId;
-            return this;
-        }
-
-        public Builder setAuthor(@NotNull final String author) {
-            this.author = author;
-            return this;
-        }
-
-        public Builder setAuthorJob(@Nullable final String authorJob) {
-            this.authorJob = authorJob;
-            return this;
-        }
-
-        public Builder setAuthorAvatar(@Nullable final String authorAvatar) {
-            this.authorAvatar = authorAvatar;
-            return this;
-        }
-
-        public Builder setContent(@NotNull final String content) {
-            if (content == null || content.trim().isEmpty()) {
-                throw new IllegalArgumentException("Content cannot be null or empty");
-            }
-            this.content = content;
-            return this;
-        }
-
-        public Builder setPublished(@NotNull final LocalDateTime published) {
-            this.published = published;
-            return this;
-        }
-
-        public Builder setCoords(@Nullable final Coordinates coords) {
-            this.coords = coords;
-            return this;
-        }
-
-        public Builder setLink(@Nullable final String link) {
-            this.link = link;
-            return this;
-        }
-
-        public Builder setMentionedMe(final boolean mentionedMe) {
-            this.mentionedMe = mentionedMe;
-            return this;
-        }
-
-        public Builder setLikedByMe(final boolean likedByMe) {
-            this.likedByMe = likedByMe;
-            return this;
-        }
-
-        public Builder setAttachment(@Nullable final Attachment attachment) {
-            this.attachment = attachment;
-            return this;
-        }
-
-        public Builder setLikes(final int likes) {
-            this.likes = likes;
-            return this;
-        }
-
-        public Builder setOriginal(@Nullable final Post original) {
-            this.original = original;
-            return this;
-        }
-
-        public Post build() {
-            return new Post(id, authorId, author, authorJob, authorAvatar,
-                    content, published, coords, link, mentionedMe, likedByMe,
-                    attachment, likes, original);
-        }
+    init {
+        require(!(content == null || content.trim { it <= ' ' }.isEmpty())) { "Content cannot be null or empty" }
     }
 }

@@ -1,4 +1,4 @@
-package models;
+package models
 
-public record Coordinates(double lat, double longitude) {
-}
+@JvmRecord
+data class Coordinates(val lat: Double, val longitude: Double)

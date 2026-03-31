@@ -1,20 +1,11 @@
 package service
 
 import models.Note
-import java.time.Instant
 
-class NoteService() {
-    private var note: Note = Note(
-        text = "",
-        createdAt = Instant.now(),
-        updatedAt = Instant.now()
-    )
-
-    fun updateText(text: String) {
-        note = note.copy(text=text, updatedAt = Instant.now())
-    }
-
-    fun getNote(): Note {
-        return note
-    }
+interface NoteService {
+    fun save(note: Note): Note
+    fun getAll(): List<Note>
+    fun getAllUniqueTexts(): List<String>
+    fun getBefore(count: Int, id: Long): List<Note>
+    fun getAfter(count: Int, id: Long): List<Note>
 }
